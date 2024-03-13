@@ -1,0 +1,770 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalabel=0">
+  <link rel="shortcut icon" href="weread_logo.jpg">
+  <meta name="keywords" content="微信读书,微信读书组队,微信读书无限卡,无限卡组队,联名无限卡" />
+  <meta name="description" content="一款方便微信读书用户组队的工具">
+  <title>微信读书一键组队</title>
+  <style>
+  body {
+      background-color: white;
+      font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+      background-repeat: repeat;
+    }
+  .bg-gradient1 span {
+    background: #52A0FD;
+    background: linear-gradient(to right, #52A0FD 0%, #00e2fa 80%, #00e2fa 100%);
+  }
+
+  .bg-gradient2 span {
+    background: #44ea76;
+    background: linear-gradient(to right, #44ea76 0%, #39fad7 80%, #39fad7 100%);
+  }
+
+  .bg-gradient3 span {
+    background: #fa6c9f;
+    background: linear-gradient(to right, #fa6c9f 0%, #ffe140 80%, #ffe140 100%);
+  }
+
+  /* General */
+  .wrapper {
+    text-align: center;
+    -webkit-transform-style: perserve-3d;
+        transform-style: perserve-3d;
+    perspecive: 800px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+  a:hover, a:focus, a:active {
+    text-decoration: none;
+  }
+
+  /* fancy Button */
+  .fancy-button {
+    display: inline-block;
+    margin: 15px;
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #ffffff;
+    position: relative;
+    cursor: pointer;
+  }
+  .fancy-button:before {
+    content: '';
+    display: inline-block;
+    height: 40px;
+    position: absolute;
+    bottom: -5px;
+    left: 30px;
+    right: 30px;
+    z-index: -1;
+    border-radius: 30em;
+    -webkit-filter: blur(20px) brightness(0.95);
+        filter: blur(20px) brightness(0.95);
+    -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    transition: all 0.3s ease-out;
+  }
+  .fancy-button i {
+    margin-top: -1px;
+    margin-right: 20px;
+    font-size: 1.265em;
+    vertical-align: middle;
+  }
+  .fancy-button span {
+    display: inline-block;
+    padding: 18px 60px;
+    border-radius: 50em;
+    position: relative;
+    z-index: 2;
+    will-change: transform, filter;
+    -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    transition: all 0.3s ease-out;
+  }
+  .fancy-button:focus, .fancy-button:active {
+    color: #ffffff;
+  }
+  .fancy-button:hover {
+    color: #ffffff;
+  }
+  .fancy-button:hover span {
+    -webkit-filter: brightness(1.05) contrast(1.05);
+        filter: brightness(1.05) contrast(1.05);
+    -webkit-transform: scale(0.95);
+        transform: scale(0.95);
+  }
+  .fancy-button:hover:before {
+    bottom: 0;
+    -webkit-filter: blur(10px) brightness(0.95);
+        filter: blur(10px) brightness(0.95);
+  }
+  .fancy-button.pop-onhover:before {
+    opacity: 0;
+    bottom: 10px;
+  }
+  .fancy-button.pop-onhover:hover:before {
+    bottom: -7px;
+    opacity: 1;
+    -webkit-filter: blur(20px);
+        filter: blur(20px);
+  }
+  .fancy-button.pop-onhover:hover span {
+    -webkit-transform: scale(1.04);
+        transform: scale(1.04);
+  }
+  .fancy-button.pop-onhover:hover:active span {
+    -webkit-filter: brightness(1) contrast(1);
+        filter: brightness(1) contrast(1);
+    -webkit-transform: scale(1);
+        transform: scale(1);
+    transition: all 0.15s ease-out;
+  }
+  .fancy-button.pop-onhover:hover:active:before {
+    bottom: 0;
+    -webkit-filter: blur(10px) brightness(0.95);
+        filter: blur(10px) brightness(0.95);
+    transition: all 0.2s ease-out;
+  }
+  .btn.is-open ~ .description {
+  /*opacity: 0; */
+}
+
+.btn {
+  /*display: block;*/
+  /*position: relative;*/
+  /*width: 200px;
+  height: 80px;*/
+  -webkit-transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1), height 0.8s cubic-bezier(0.23, 1, 0.32, 1), -webkit-transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1), height 0.8s cubic-bezier(0.23, 1, 0.32, 1), transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transform-origin: 50% 50%;
+      -ms-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  text-align: center; }
+
+.btn-front {
+  /*position: absolute;*/
+  /*display: block;*/
+  /*width: 100%;*/
+  /*height: 100%;*/
+  /*line-height: 80px;*/
+  /*background-color: #F44336;*/
+  /*color: #fff;*/
+  cursor: pointer;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-transition: background 0.15s ease, line-height 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+          transition: background 0.15s ease, line-height 0.8s cubic-bezier(0.23, 1, 0.32, 1); }
+  .btn-front:hover {
+    /*background-color: #f77066;*/
+  }
+
+.btn-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /*background-color: #eee;*/
+  opacity: 0;
+  color: #222;
+  -webkit-transform: translateZ(-2px) rotateX(180deg);
+          transform: translateZ(-2px) rotateX(180deg);
+  overflow: hidden;
+  -webkit-transition: box-shadow 0.8s ease;
+          transition: box-shadow 0.8s ease; }
+
+  .btn-back p {
+    margin-top: 27px;
+    margin-bottom: 25px; }
+  .btn-back button {
+    padding: 12px 20px;
+    width: 30%;
+    margin: 0 5px;
+    /*background-color: transparent;*/
+    border: 0;
+    border-radius: 2px;
+    font-size: 1em;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-transition: background 0.15s ease;
+            transition: background 0.15s ease; }
+  .btn-back button:focus {
+    outline: 0; }
+  .btn-back button.yes {
+    background-color: #2196F3;
+    color: #fff; }
+    .btn-back button.yes:hover {
+      background-color: #51adf6; }
+  .btn-back button.no {
+    color: #2196F3;
+    background-color: #f2f4f5;}
+    .btn-back button.no:hover {
+      background-color: #f2f4f5; }
+
+    .btn[data-direction="left"] .btn-back,
+    .btn[data-direction="right"] .btn-back {
+      -webkit-transform: translateZ(-2px) rotateY(180deg);
+              transform: translateZ(-2px) rotateY(180deg); }
+
+    .btn.is-open {
+      width: 250px;
+      height: 120px;
+      /*opacity: 0;*/
+    }
+      .btn.is-open .btn-front {
+        /*pointer-events: none;*/
+        /*line-height: 160px; */
+        opacity: 0;
+      }
+      .btn.is-open .btn-back {
+        /*box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);*/
+        opacity: 1;
+      }
+
+    .btn[data-direction="top"].is-open {
+      -webkit-transform: rotateX(180deg);
+              transform: rotateX(180deg); }
+
+    .btn[data-direction="right"].is-open {
+      -webkit-transform: rotateY(180deg);
+              transform: rotateY(180deg); }
+
+    .btn[data-direction="bottom"].is-open {
+      -webkit-transform: rotateX(-180deg);
+              transform: rotateX(-180deg); }
+
+    .btn[data-direction="left"].is-open {
+      -webkit-transform: rotateY(-180deg);
+    }
+
+
+    .btn-link.is-open ~ .description {
+  /*opacity: 0; */
+}
+
+.btn-link {
+  -webkit-transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1), height 0.8s cubic-bezier(0.23, 1, 0.32, 1), -webkit-transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1), height 0.8s cubic-bezier(0.23, 1, 0.32, 1), transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transform-origin: 50% 50%;
+      -ms-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  text-align: center; }
+
+.btn-link-front {
+  cursor: pointer;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-transition: background 0.15s ease, line-height 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+          transition: background 0.15s ease, line-height 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+.btn-link-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /*background-color: #eee;*/
+  opacity: 0;
+  color: #222;
+  -webkit-transform: translateZ(-2px) rotateX(180deg);
+          transform: translateZ(-2px) rotateX(180deg);
+  overflow: hidden;
+  -webkit-transition: box-shadow 0.8s ease;
+          transition: box-shadow 0.8s ease;
+  }
+
+  input:focus {
+    outline: 0; }
+
+  .btn-link-back div {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .btn-link-back button {
+    padding: 12px 20px;
+    width: 30%;
+    margin: 0 5px;
+    /*background-color: transparent;*/
+    border: 0;
+    border-radius: 2px;
+    font-size: 1em;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-transition: background 0.15s ease;
+            transition: background 0.15s ease; }
+  .btn-link-back button:focus {
+    outline: 0; }
+  .btn-link-back button.yes {
+    background-color: #2196F3;
+    color: #fff; }
+    .btn-link-back button.yes:hover {
+      background-color: #51adf6; }
+  .btn-link-back button.no {
+    color: #2196F3;
+    background-color: #f2f4f5;
+  }
+    .btn-link-back button.no:hover {
+      background-color: #f2f4f5; }
+
+    .btn-link[data-direction="left"] .btn-link-back,
+    .btn-link[data-direction="right"] .btn-link-back {
+      -webkit-transform: translateZ(-2px) rotateY(180deg);
+              transform: translateZ(-2px) rotateY(180deg); }
+
+.btn-link.is-open {
+  width: 250px;
+  height: 120px;
+}
+  .btn-link.is-open .btn-link-front {
+    opacity: 0;
+  }
+  .btn-link.is-open .btn-link-back {
+    /*box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);*/
+    opacity: 1;
+  }
+
+    .btn-link[data-direction="top"].is-open {
+      -webkit-transform: rotateX(180deg);
+              transform: rotateX(180deg); }
+
+    .btn-link[data-direction="right"].is-open {
+      -webkit-transform: rotateY(180deg);
+              transform: rotateY(180deg); }
+
+    .btn-link[data-direction="bottom"].is-open {
+      -webkit-transform: rotateX(-180deg);
+              transform: rotateX(-180deg); }
+
+    .btn-link[data-direction="left"].is-open {
+      -webkit-transform: rotateY(-180deg);
+    }
+
+    .input {
+  position: relative;
+  font-size: 1.5em;
+  background: linear-gradient(21deg, #10abff, #1beabd);
+  padding: 3px;
+  display: inline-block;
+  border-radius: 9999em;
+}
+.input *:not(span) {
+  position: relative;
+  display: inherit;
+  border-radius: inherit;
+  margin: 0;
+  border: none;
+  outline: none;
+  padding: 0 .325em;
+  z-index: 1;
+}
+.input *:not(span):focus + span {
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.input span {
+  -webkit-transform: scale(0.993, 0.94);
+          transform: scale(0.993, 0.94);
+  transition: opacity .25s, -webkit-transform .5s;
+  transition: transform .5s, opacity .25s;
+  transition: transform .5s, opacity .25s, -webkit-transform .5s;
+  opacity: 0;
+  position: absolute;
+  z-index: 0;
+  margin: 4px;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 3px #fff, 0 0 0 4px #fff, 3px -3px 30px #1beabd,  -3px 3px 30px #10abff;
+}
+
+input {
+  font-family: inherit;
+  line-height: inherit;
+  color: #2e3750;
+  min-width: 12em;
+  height: 36px;
+}
+
+::-webkit-input-placeholder {
+  color: #cbd0d5;
+}
+
+:-ms-input-placeholder {
+  color: #cbd0d5;
+}
+
+::-ms-input-placeholder {
+  color: #cbd0d5;
+}
+
+::placeholder {
+  color: #cbd0d5;
+}
+
+.help-highlight {
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+  text-shadow:
+     3px 0px 3px #a0b1c1,
+    -3px 0px 3px #0084FF,
+     6px 0px 6px #0084FF,
+    -6px 0px 6px #0084FF;
+}
+
+#share {
+  color: grey;
+  background: linear-gradient(to bottom, transparent 52%, #fff87e 0) center center/0% 75% no-repeat;
+  padding: 0 6px 2px 6px;
+  letter-spacing: .08rem;
+  background-size: 100% 100%;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+#share2 {
+  color: grey;
+  /* background: linear-gradient(to bottom, transparent 52%, #fff87e 0) center center/0% 75% no-repeat; */
+  padding: 0 6px 2px 6px;
+  letter-spacing: .08rem;
+  background-size: 100% 100%;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+#notify {
+  visibility: hidden;
+  min-width: 250px;
+  background-color: #97abc1;
+  color: white;
+  text-align: center;
+  border-radius: 2px;
+  padding: 12px;
+  position: fixed;
+  z-index: 1;
+  top: 30px;
+  font-size: 14px;
+}
+
+#notify.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {top: 0; opacity: 0;}
+  to {top: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {top: 0; opacity: 0;}
+  to {top: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {top: 30px; opacity: 1;}
+  to {top: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {top: 30px; opacity: 1;}
+  to {top: 0; opacity: 0;}
+}
+  .nav_active {
+  color: grey;
+  background: linear-gradient(to bottom, transparent 52%, #fff87e 0) center center/0% 75% no-repeat;
+  padding: 0 6px 2px 6px;
+  letter-spacing: .08rem;
+  background-size: 100% 100%;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.nav {
+  color: grey;
+  padding: 0 6px 2px 6px;
+  letter-spacing: .08rem;
+  background-size: 100% 100%;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+
+  </style>
+</head>
+<body>
+  <div style="display: flex; align-items: center; justify-content: center;">
+    <div id="notify">
+    </div>
+
+    <div style="display: flex; justify-content: center; font-size: 13px; flex-direction: column; align-items: center;">
+      <div style="margin-bottom: 5px;">
+  <a class="nav " href="/">无限卡</a>
+  <a class="nav " href="/giveonegetone">联名卡</a>
+  <!-- <a class="nav " href="/flip">翻一翻</a> -->
+  <a class="nav nav_active" href="/onestep">一键组队</a>
+</div>
+      <div id="">
+	  <img src="weixin.png" width="146" height="146">
+      </div>
+      <form action="/onestep" style="margin-top: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+<!--         <div>
+          <p>
+            <span class="input">
+              <input name="searchtext" id="linkcode" type="text" placeholder="输入vid" style="padding: 0 20px;" value="">
+              <span></span>
+            </span>
+          </p>
+        </div> -->
+        <!-- <button style="font-size: 13px; color: white; letter-spacing: 0.4px; background-color: #b3b0b0; padding: 8px 15px; border-radius: 30px; width: 100px;">查找</button> -->
+        <div style="margin: 10px; font-size: 12px; color: grey; display: flex; flex-direction: column; line-height: 26px; align-items: center; justify-content: center;">
+          <div>添加客服开通自动组队功能</div>
+          <div>开通后无需手动添加链接，每期系统都会自动添加</div>
+        </div>
+      </form>
+
+      
+
+      
+
+      <div style="width: 200px; background-color: #dcd4d4; height: 1px; margin: 10px 0 10px 0;">
+      </div>
+
+<div style="padding: 5px 0;  display: flex; justify-content: center; flex-direction: column; align-items: center;">
+
+  <!-- <div style="padding: 5px;">
+        <a style="color: #259; cursor: pointer; font-size: 12px;" href="/onetime">周六快速组队</a>
+  </div> -->
+
+ <!--  <div style="padding: 5px;">
+        <a style="color: #259; cursor: pointer; font-size: 12px;" href="/followme">关注公众号防走丢</a> <span style="margin: 0 2px;">/</span> <a style="color: #259; cursor: pointer; font-size: 12px;" href="/dollar">我的积分</a> <span style="margin: 0 2px;">/</span> <a style="color: #259; cursor: pointer; font-size: 12px;" href="/vip"><strong style="color:rgb(223, 91, 91)">永久</strong>VIP</a>
+  </div>
+
+  <div style="padding: 5px;">
+        <a style="color: #259; cursor: pointer; font-size: 12px;" href="/chrome">微信读书助手，一款Chrome插件, 组队、听书、备份笔记</a>
+  </div>
+
+  <div style="padding: 5px;">
+    <a href="https://cyberdav.top/" target="_blank" style="color: rgb(71, 143, 214); cursor: pointer; font-size: 12px;">CyberDAV - 阿里云盘webdav挂载服务</a>
+  </div> -->
+
+   <div style="padding: 10px 0; color: #8590A6; font-size: 12px; display: flex; flex-direction: column; letter-spacing: 0.5px; line-height: 20px; justify-content: center; align-items: center;">
+    <span>如果小站对你有帮助，麻烦分享给身边朋友</span>
+    <span>无限卡开始时间，每周6上午8点</span>
+    <span>联名卡开始时间，每周5晚上9点</span>
+  </div>
+
+  <!-- <div style="padding: 10px; color: #8590A6; font-size: 12px; display: flex; flex-direction: column; letter-spacing: 0.5px; line-height: 20px; justify-content: center; align-items: center; border: 1px dashed #dad7d7;">
+    <div><span>% 即刻app出品 %</span> ，最近发现的一个App，淘宝、京东、美团好多平台都能返利。你可以下载试试 ↓<div>
+    <div style="display: flex; justify-content: center; align-items: center;"><a href="https://zz.nbdisco.com/download?code=9O2B7" style="color: blue; text-decoration: underline;">快鸟返利</a></div>
+  </div> -->
+
+  <!-- <div style="padding: 10px 0; color: #8590A6; font-size: 12px; display: flex; flex-direction: column; letter-spacing: 0.5px; line-height: 20px; justify-content: center; align-items: center;">
+    <a href="https://www.bilibili.com/" style="display: flex;flex-direction: column;align-items: center;border: 1px solid #f3f0ef;">
+      <img src="//cdn.qnmlgb.tech/picloud/20210304142706_Sc43xV.png" style="height: 120px;" alt="哔哩哔哩" />
+      <span style="color: #03a9f4;">你感兴趣的视频都在B站</span>
+    </a>
+  </div> -->
+</div>
+
+
+
+    </div>
+  </div>
+  <script src="//lib.baomitu.com/qrcode-generator/1.4.1/qrcode.min.js"></script>
+  <script>
+    function icannotify(text) {
+      var notify = document.getElementById("notify");
+      notify.innerHTML = text;
+      notify.className = "show";
+      setTimeout(function() {
+        notify.className = notify.className.replace("show", "");
+      }, 3000);
+    }
+
+    function addFavorite(url, title) {
+        if(window.external && 'addFavorite' in window.external){
+            window.external.addFavorite(url, title);
+        } else if(window.sidebar && window.sidebar.addPanel) {
+            window.sidebar.addPanel(url, title);
+        } else if(window.opera && window.print) {
+            this.title = title;
+            return true;
+        } else {
+            alert('' + (navigator.userAgent.toLowerCase().indexOf('mac') != - 1 ? 'Command' : 'CTRL') + ' + D 收藏');
+        }
+    }
+
+    function inwechat() {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    if (inwechat()) {
+      var intro = document.getElementById('intro');
+      if (intro) {
+        //intro.innerHTML = '<a style="font-size: 13px; font-weight: 900; color: grey;" href="http://weread.qnmlgb.tech/ladder/"># 长按二维码识别 #</a>'
+      }
+
+      var share = document.getElementById('share');
+      if (share) {
+        // share.innerHTML = '点击右上角分享到朋友圈让更多小伙伴知道'
+      }
+
+      // collect.innerHTML = ''
+    }
+
+    var render = function(code) {
+      var typeNumber = 12;
+      var errorCorrectionLevel = 'L';
+      var qr = qrcode(typeNumber, errorCorrectionLevel);
+      qr.addData(code);
+      qr.make();
+      document.getElementById('qrcode').innerHTML = qr.createImgTag();
+    };
+    var code = '';
+    
+    document.getElementById('qrcode').innerHTML = '<div style="padding: 20px 0px; color: grey;">暂没进行中组队，提交自己の微信读书分享链接吧</div>';
+    
+
+    function nextcode() {
+      if (code.length > 0) {
+        
+        window.location.replace('?prevCode=' + code)
+        
+      }
+    }
+
+    function fullcode() {
+      if (code.length > 0) {
+        
+        window.location.replace('/' + code + '/check')
+        
+      }
+    }
+
+    function restart() {
+      window.location.replace('/')
+    }
+
+    window.onload = function() {
+
+  var btnLink = document.querySelector( '.btn-link' );
+  var btnLinkFront = btnLink.querySelector( '.btn-link-front' ),
+    btnLinkYes = btnLink.querySelector( '.btn-link-back .yes' ),
+    btnLinkNo = btnLink.querySelector( '.btn-link-back .no' );
+  var btnFlip = document.querySelector('.flip-btn');
+
+  btnLinkFront.addEventListener('click', function( event ) {
+    var mx = event.clientX - btnLink.offsetLeft, my = event.clientY - btnLink.offsetTop;
+    var w = btnLink.offsetWidth, h = btnLink.offsetHeight;
+    var directions = [
+      { id: 'top', x: w/2, y: 0 },
+      { id: 'right', x: w, y: h/2 },
+      { id: 'bottom', x: w/2, y: h },
+      { id: 'left', x: 0, y: h/2 }
+    ];
+    directions.sort( function( a, b ) {
+      return distance( mx, my, a.x, a.y ) - distance( mx, my, b.x, b.y );
+    } );
+    btnLink.setAttribute( 'data-direction', directions.shift().id );
+    btnLink.classList.add( 'is-open' );
+  } );
+
+  btnLinkYes.addEventListener( 'click', function( event ) {
+    var linkcode = document.getElementById('linkcode');
+    if (linkcode.value.length > 0) {
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = onResponse;
+      xhr.open('POST', '/submit', true);
+      xhr.setRequestHeader('Content-type', 'application/json');
+      xhr.send(JSON.stringify({'url': linkcode.value}));
+      linkcode.value = '';
+      function onResponse() {
+          if (xhr.readyState != 4) return;
+          if (xhr.responseText == '成功') {
+            icannotify('提交成功')
+          } else {
+            icannotify('提交失败')
+          }
+
+          console.log('icandoit', xhr.responseText);
+      }
+    }
+    btnLink.classList.remove( 'is-open' );
+  } );
+
+  btnLinkNo.addEventListener( 'click', function( event ) {
+    btnLink.classList.remove( 'is-open' );
+  } );
+
+
+  var btn = document.querySelector('.btn');
+
+  var btnFront = btn.querySelector( '.btn-front' ),
+    btnYes = btn.querySelector( '.btn-back .yes' ),
+    btnNo = btn.querySelector( '.btn-back .no' );
+
+  btnFront.addEventListener('click', function( event ) {
+    var mx = event.clientX - btn.offsetLeft,
+      my = event.clientY - btn.offsetTop;
+
+    var w = btn.offsetWidth,
+      h = btn.offsetHeight;
+
+    var directions = [
+      { id: 'top', x: w/2, y: 0 },
+      { id: 'right', x: w, y: h/2 },
+      { id: 'bottom', x: w/2, y: h },
+      { id: 'left', x: 0, y: h/2 }
+    ];
+
+    directions.sort( function( a, b ) {
+      return distance( mx, my, a.x, a.y ) - distance( mx, my, b.x, b.y );
+    } );
+
+    btn.setAttribute( 'data-direction', directions.shift().id );
+    btn.classList.add( 'is-open' );
+  } );
+
+  btnYes.addEventListener( 'click', function( event ) {
+    fullcode();
+  } );
+
+  btnNo.addEventListener( 'click', function( event ) {
+    btn.classList.remove( 'is-open' );
+  } );
+
+  function distance( x1, y1, x2, y2 ) {
+    var dx = x1-x2;
+    var dy = y1-y2;
+    return Math.sqrt( dx*dx + dy*dy );
+  }
+
+};
+  </script>
+
+</body>
+</html>
